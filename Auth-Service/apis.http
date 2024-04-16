@@ -1,0 +1,49 @@
+@HOST=http://127.0.0.1:4002/api/auth-service
+
+### Admin Login
+POST {{HOST}}/admin/login
+content-type: application/json
+
+{
+    "email": "admin@mail.com",
+    "password": "admin@123"
+}
+
+### Admin Logout
+GET {{HOST}}/admin/logout
+content-type: application/json
+
+
+### User Login
+POST {{HOST}}/user/login
+content-type: application/json
+
+{
+    "email": "adarsh@mail.com",
+    "password": "admin@123"
+}
+
+### User Logout
+GET {{HOST}}/user/logout
+content-type: application/json
+
+
+### Admin Reset Password
+POST {{HOST}}/admin/reset-password
+content-type: application/json
+
+{
+    "userId": "654b2510725776204f2b3eef",
+    "oldPassword":"admin@123",
+    "newPassword":"1234"
+}
+
+### User Reset Password
+POST {{HOST}}/user/reset-password
+content-type: application/json
+
+{
+    "userId": "6617cfd9f26061dd4f639e04",
+    "oldPassword":"123456",
+    "newPassword":"1234"
+}

@@ -1,0 +1,37 @@
+@HOST=http://127.0.0.1:4002/api/user-service
+
+###
+GET {{HOST}}/user/6617cfd9f26061dd4f639e04
+content-type: application/json
+
+###
+GET {{HOST}}/users
+content-type: application/json
+
+###
+POST {{HOST}}/user
+content-type: application/json
+
+{
+    "name": "User abc",
+    "email": "mail1@mail.com",
+    "mobile": "9876543210",
+    "password": "123456",
+    "role": "Outlet Manager",
+    "outlet": "Outlet 1",
+    "createdBy": "654b2510725776204f2b3eef"
+}
+
+###
+PATCH {{HOST}}/user
+content-type: application/json
+
+{
+    "userId": "6617cfd9f26061dd4f639e04",
+    "isActive": false,
+    "password":"123456"
+}
+
+###
+DELETE {{HOST}}/user/661e0bb63d6413e17ac4e80d
+content-type: application/json
