@@ -1,9 +1,11 @@
+import { ROLES } from "../../utils/roles.list";
+
 export default class UserEntity{
-    public userId? : string;
+    public _id? : string;
     public name? : string;
     public email? : string;
     public mobile? : string;
-    public role? : string;
+    public roles? : Array<ROLES>;
     public outlet? : string;
     public password? : string;
     public isActive? : boolean;

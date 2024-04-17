@@ -1,4 +1,4 @@
-@HOST=http://127.0.0.1:4002/api/auth-service
+@HOST=http://127.0.0.1:4001/api/auth-service
 
 ### Admin Login
 POST {{HOST}}/admin/login
@@ -19,8 +19,8 @@ POST {{HOST}}/user/login
 content-type: application/json
 
 {
-    "email": "adarsh@mail.com",
-    "password": "admin@123"
+    "email": "arjun@gmail.com",
+    "password": "123456"
 }
 
 ### User Logout
@@ -46,4 +46,13 @@ content-type: application/json
     "userId": "6617cfd9f26061dd4f639e04",
     "oldPassword":"123456",
     "newPassword":"1234"
+}
+
+### User Status Update
+POST {{HOST}}/user/update-status
+content-type: application/json
+
+{
+    "userId": "661f47e7d4b53a3fba681ad1",
+    "isActive": "true"
 }

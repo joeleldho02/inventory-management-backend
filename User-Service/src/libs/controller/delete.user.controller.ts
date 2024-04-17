@@ -1,6 +1,6 @@
 import { inject, injectable } from "inversify";
 import { DeleteUserUseCase } from "../usecase/delete.user.usecase";
-import { INTERFACE_TYPE } from "../../utils/appConsts";
+import { INTERFACE_TYPE } from "../../utils/interface/interface.types";
 import { NextFunction, Request, Response } from "express";
 
 @injectable()

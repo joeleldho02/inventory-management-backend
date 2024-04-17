@@ -10,4 +10,5 @@ export const INTERFACE_TYPE = {
     GetUserUseCase: Symbol.for("GetUserUseCase"),
     UpdateUserController: Symbol.for("UpdateUserController"), 
     UpdateUserUseCase: Symbol.for("UpdateUserUseCase"),
+    UpdateStatusController: Symbol.for("UpdateStatusController"),
 };

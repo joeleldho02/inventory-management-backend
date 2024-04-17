@@ -1,6 +1,6 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response} from "express";
 
-const ErrorHandler = (err:any, req:Request, res:Response, next:NextFunction) => {
+const ErrorHandler = (err:{statusCode:number, message:string, stack:string}, req:Request, res:Response) => {
     const errStatus = err.statusCode || 500;
     const errMsg = err.message || 'Something went wrong';
     console.log(`Error:${errStatus} -->> ${errMsg} -->> ${err?.stack}`);

@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { inject, injectable } from "inversify";
 import { GetUsersUseCase } from "../usecase/get.users.usecase";
-import { INTERFACE_TYPE } from "../../utils/appConsts";
+import { INTERFACE_TYPE } from "../../utils/interface/interface.types";
 
 @injectable()
 export class GetUsersController{
@@ -9,8 +9,13 @@ export class GetUsersController{
 
     async getUsers(req:Request, res:Response, next:NextFunction){
         try{
-            const limit = parseInt(req.query.limit as string) || 10;
-            const skip = parseInt(req.query.skip as string) || 0;
+            let page = 1, limit = 10, skip = 0;
+            if(req.query.page && parseInt(req.query?.page as string) > 0)
+                page = parseInt(req.query?.page as string);
+            if(req.query.limit && parseInt(req.query?.limit as string) > 5)
+                limit = parseInt(req.query?.limit as string);
+            skip = (page - 1) * limit;
+                        
             const response = await this.usecase.execute(limit, skip);
             if(response.status)
                 res.status(200).json(response);

@@ -11,4 +11,8 @@ export const INTERFACE_TYPE = {
     UserResetPassController: Symbol.for("UserResetPassController"),
     AdminResetPassUseCase: Symbol.for("AdminResetPassUseCase"),
     AdminResetPassController: Symbol.for("AdminResetPassController"),
+    AddUserUseCase: Symbol.for("AddUserUseCase"),
+    AddUserController: Symbol.for("AddUserController"),
+    UserUpdateStatusUseCase: Symbol.for("UserUpdateStatusUseCase"),
+    UserUpdateStatusController: Symbol.for("UserUpdateStatusController"),
 };

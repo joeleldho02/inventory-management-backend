@@ -12,6 +12,10 @@ import { UserResetPassController } from "../libs/controller/user/user.resetPass.
 import { AdminResetPassUseCase } from "../libs/usecase/admin/admin.resetPass.usecase";
 import { UserResetPassUseCase } from "../libs/usecase/user/user.resetpass.usecase";
 import { AdminResetPassController } from "../libs/controller/admin/admin.restPass.controller";
+import { AddUserUseCase } from "../libs/usecase/user/add.user.usecase";
+import { AddUserController } from "../libs/controller/user/add.user.controller";
+import { UserUpdateStatusUseCase } from "../libs/usecase/user/user.updateStatus.usecase";
+import { UserUpdateStatusController } from "../libs/controller/user/user.updateStatus.controller";
 
 const container = new Container();
 
@@ -27,6 +31,10 @@ container.bind(INTERFACE_TYPE.UserResetPassUseCase).to(UserResetPassUseCase);
 container.bind(INTERFACE_TYPE.UserResetPassController).to(UserResetPassController);
 container.bind(INTERFACE_TYPE.AdminResetPassUseCase).to(AdminResetPassUseCase);
 container.bind(INTERFACE_TYPE.AdminResetPassController).to(AdminResetPassController);
+container.bind(INTERFACE_TYPE.AddUserUseCase).to(AddUserUseCase);
+container.bind(INTERFACE_TYPE.AddUserController).to(AddUserController);
+container.bind(INTERFACE_TYPE.UserUpdateStatusUseCase).to(UserUpdateStatusUseCase);
+container.bind(INTERFACE_TYPE.UserUpdateStatusController).to(UserUpdateStatusController);
 
 const adminLoginController = container.get<AdminLoginController>(INTERFACE_TYPE.AdminLoginController);
 const adminLogoutController = container.get<AdminLogoutController>(INTERFACE_TYPE.AdminLogoutController);
@@ -34,6 +42,8 @@ const userLoginController = container.get<UserLoginController>(INTERFACE_TYPE.Us
 const userLogoutController = container.get<UserLogoutController>(INTERFACE_TYPE.UserLogoutController);
 const userResetPassController = container.get<UserResetPassController>(INTERFACE_TYPE.UserResetPassController);
 const adminResetPassController = container.get<AdminResetPassController>(INTERFACE_TYPE.AdminResetPassController);
+const addUserController = container.get<AddUserController>(INTERFACE_TYPE.AddUserController);
+const userUpdateStatusController = container.get<UserUpdateStatusController>(INTERFACE_TYPE.UserUpdateStatusController);
 
 export {
     adminLoginController,
@@ -42,4 +52,6 @@ export {
     userLogoutController,
     adminResetPassController,
     userResetPassController,
+    addUserController,
+    userUpdateStatusController,
 }

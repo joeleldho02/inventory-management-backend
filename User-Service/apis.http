@@ -1,11 +1,11 @@
 @HOST=http://127.0.0.1:4002/api/user-service
 
 ###
-GET {{HOST}}/user/6617cfd9f26061dd4f639e04
+GET {{HOST}}/user/661f811db81640477dbc41c5
 content-type: application/json
 
 ###
-GET {{HOST}}/users
+GET {{HOST}}/users?page=-1&limit=10
 content-type: application/json
 
 ###
@@ -13,12 +13,12 @@ POST {{HOST}}/user
 content-type: application/json
 
 {
-    "name": "User abc",
-    "email": "mail1@mail.com",
-    "mobile": "9876543210",
+    "name": "Arjun T",
+    "email": "arjun@gmail.com",
+    "mobile": "9632587410",
     "password": "123456",
-    "role": "Outlet Manager",
-    "outlet": "Outlet 1",
+    "role": [1001, 1002],
+    "outlet": "Outlet 10",
     "createdBy": "654b2510725776204f2b3eef"
 }
 

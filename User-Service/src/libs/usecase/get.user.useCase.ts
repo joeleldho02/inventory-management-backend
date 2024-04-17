@@ -1,6 +1,6 @@
 import { inject, injectable } from "inversify";
 import { UserRepository } from "../repository/user.repository";
-import { INTERFACE_TYPE } from "../../utils/appConsts";
+import { INTERFACE_TYPE } from "../../utils/interface/interface.types";
 
 @injectable()
 export class GetUserUseCase{

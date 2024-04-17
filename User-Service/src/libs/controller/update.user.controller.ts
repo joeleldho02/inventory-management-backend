@@ -1,6 +1,6 @@
 import { inject, injectable } from "inversify";
 import { UpdateUserUseCase } from "../usecase/update.user.usecase";
-import { INTERFACE_TYPE } from "../../utils/appConsts";
+import { INTERFACE_TYPE } from "../../utils/interface/interface.types";
 import { NextFunction, Request, Response } from "express";
 import UserEntity from "../entities/user.entity";
 

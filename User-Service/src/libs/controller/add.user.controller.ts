@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { inject, injectable } from "inversify";
 import UserEntity from "../entities/user.entity";
 import { AddUserUseCase } from "../usecase/add.user.usecase";
-import { INTERFACE_TYPE } from "../../utils/appConsts";
+import { INTERFACE_TYPE } from "../../utils/interface/interface.types";
 
 @injectable()
 export class AddUserController{
@@ -10,6 +10,10 @@ export class AddUserController{
 
     async addUser(req:Request, res:Response, next:NextFunction){
         try{            
+            console.log('Add user');
+            
+            console.log(req.body);
+            
             if(Object.keys(req.body).length === 0)
                 throw new Error('User data is missing!');
             

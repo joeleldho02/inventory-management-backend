@@ -9,12 +9,7 @@ const userSchema: Schema<UserEntity> = new Schema<UserEntity>({
   mobile: {
     type: String,
   },
-  password: {
-    type: String,
-  },
-  role: {
-    type: String,
-  },
+  roles: [],
   outlet: {
     type: String,
   },

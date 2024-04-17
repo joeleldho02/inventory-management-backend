@@ -22,7 +22,7 @@ export const verifyUser = (req: Request, res: Response, next: NextFunction) => {
         return res.status(401).json({ status: false, message: "Invalid Refresh Token" });
 
     jwt.verify( userAccessToken, process.env.ACCESS_SECRET_KEY || "", 
-        (err: jwt.VerifyErrors | null, decoded: any) => {
+        (err: jwt.VerifyErrors | null, decoded) => {
             if (err) {
                 console.log("err.name");
                 console.log(err.name);

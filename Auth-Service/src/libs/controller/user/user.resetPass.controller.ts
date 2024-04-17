@@ -12,7 +12,7 @@ export class UserResetPassController{
             if(!req.body || !req.body.oldPassword || !req.body.newPassword )
                 throw new Error('Both old and new passwords are required!');
             if(!req.body.userId )
-                throw new Error('User Id id required!');
+                throw new Error('User Id is required!');
             
             const { userId, oldPassword, newPassword } = req.body;
             const response = await this.usecase.execute(userId, oldPassword, newPassword);

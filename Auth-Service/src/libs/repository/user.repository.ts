@@ -10,9 +10,18 @@ export class UserRepository{
         this.db = UserDb;
     }
 
+    async create(userData: UserEntity) {
+        try{
+            await this.db.create({ ...userData, updatedBy:userData.createdBy });   
+        } catch(err){
+            console.log('ERR: UserRepository -> create() ', err);  
+            throw new Error("Error in creating user!");
+        }
+    }
+
     async findById(userId: string):Promise<UserEntity> {
         try{
-            let user = await this.db.findById(userId).lean();
+            const user = await this.db.findById(userId).lean();
             return user as UserEntity;
         } catch(err){
             console.log('ERR: UserRepository -> findById() ', err);
@@ -49,6 +58,4 @@ export class UserRepository{
             throw new Error('Error in updating user!');
         }
     }
-    
-
 }

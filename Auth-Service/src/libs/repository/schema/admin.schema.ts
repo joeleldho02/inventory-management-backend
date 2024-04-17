@@ -13,6 +13,7 @@ const adminSchema: Schema<AdminEntity> = new Schema<AdminEntity>({
         required: true,
         unique: false
     },
+    roles: [],
     updatedOn:{
       type:Date,
       default:Date.now()

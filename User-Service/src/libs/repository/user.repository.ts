@@ -14,7 +14,6 @@ export class UserRepository implements IUserRepository{
     async create(userData: UserEntity) {
         try{
             const user = await this.db.create({ ...userData, updatedBy:userData.createdBy });
-            delete user.password;
             return user;          
         } catch(err){
             console.log('ERR: UserRepository -> create() ', err);  
@@ -26,8 +25,6 @@ export class UserRepository implements IUserRepository{
         try{
             userData.updatedOn = new Date();            
             const user = await this.db.findByIdAndUpdate(userId, userData, {new: true});
-            if(user?.password)
-                delete user.password;
             return user;
         } catch(err){            
             console.log('ERR: UserRepository -> update() ', err);
@@ -37,7 +34,7 @@ export class UserRepository implements IUserRepository{
     
     async findAll(limit = 10, skip = 0) {
         try{
-            const users = await this.db.find({},{password:0, createdBy:0, updatedBy:0, updatedOn:0})
+            const users = await this.db.find({},{createdBy:0, updatedBy:0, updatedOn:0})
                                         .skip(skip)
                                         .limit(limit)
                                         .sort({createdOn:-1})
@@ -51,7 +48,7 @@ export class UserRepository implements IUserRepository{
 
     async findById(userId: string) {
         try{
-            let user = await this.db.findById(userId, {password:0});
+            const user = await this.db.findById(userId);
             return user;
         } catch(err){
             console.log('ERR: UserRepository -> findById() ', err);
@@ -60,9 +57,7 @@ export class UserRepository implements IUserRepository{
     }
     async delete(userId: string) {
         try{
-            let user = await this.db.findByIdAndDelete(userId);
-            if(user?.password)
-                delete user.password;                        
+            const user = await this.db.findByIdAndDelete(userId);
             return user;
         } catch(err){
             console.log('ERR: UserRepository -> delete() ', err);
@@ -71,7 +66,7 @@ export class UserRepository implements IUserRepository{
     }
     async userEmailExist(email: string) {
         try {
-            let user = await this.db.findOne({ email: email });
+            const user = await this.db.findOne({ email: email });
             if(user){
               return true;
             }
@@ -79,6 +74,14 @@ export class UserRepository implements IUserRepository{
         } catch (err) {
             console.log(err);
             return false;
+        }
+    }
+    async getDocCount():Promise<number>{
+        try{
+            return await this.db.find({}).countDocuments();
+        } catch(err){
+            console.log('ERR: getDocCount() --> ',err);
+            return -1;            
         }
     }
 }
