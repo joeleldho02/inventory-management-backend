@@ -1,6 +1,6 @@
 import express from "express";
-import cors from "cors";
 import dotenv from "dotenv";
+import cors from "cors";
 import cookieParser from "cookie-parser";
 import ErrorHandler from "./libs/middleware/errorHandler";
 import invalidApiCall from "./libs/middleware/invalidApiCall";
@@ -16,8 +16,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(cors({
-    // origin: process.env.FRONTEND__URL,
-    origin: 'http://localhost:4200',
+    origin: process.env.FRONTEND__URL,
+    // origin: 'http://localhost:4200',
     methods: "GET, HEAD, PUT, PATCH, POST, DELETE",
     credentials: true
 }));

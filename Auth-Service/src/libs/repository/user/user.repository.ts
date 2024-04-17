@@ -1,9 +1,10 @@
 import { injectable } from "inversify";
-import { UserDb } from './schema/user.schema';
-import UserEntity from "../entities/user.entity";
+import { UserDb } from '../schema/user.schema';
+import UserEntity from "../../entities/user.entity";
+import { IUserRepository } from "./IUserRepository";
 
 @injectable()
-export class UserRepository{
+export class UserRepository implements IUserRepository{
     private db: typeof UserDb;
 
     constructor(){
@@ -31,7 +32,7 @@ export class UserRepository{
 
     async findByEmail(email: string):Promise<UserEntity> {
         try{
-            let user = await this.db.findOne({email: email}).lean();
+            const user = await this.db.findOne({email: email}).lean();
             return user as UserEntity;
         } catch(err){
             console.log('ERR: UserRepository -> findByEmail() ', err);
@@ -41,7 +42,7 @@ export class UserRepository{
 
     async updatePassword(userId:string, password: string):Promise<UserEntity>{
         try{
-            let user = await this.db.findByIdAndUpdate(userId, { password: password, updatedOn: Date.now()}, { new: true }).lean();
+            const user = await this.db.findByIdAndUpdate(userId, { password: password, updatedOn: Date.now()}, { new: true }).lean();
             return user as UserEntity;
         } catch(err){
             console.log('ERR: UserRepository -> updatePassword() ', err);
@@ -51,7 +52,7 @@ export class UserRepository{
 
     async updateIsActive(userId:string, isActive: boolean):Promise<UserEntity>{
         try{
-            let user = await this.db.findByIdAndUpdate(userId, { isActive: isActive, updatedOn: Date.now()}, { new: true }).lean();
+            const user = await this.db.findByIdAndUpdate(userId, { isActive: isActive, updatedOn: Date.now()}, { new: true }).lean();
             return user as UserEntity;
         } catch(err){
             console.log('ERR: UserRepository -> updateIsActive() ', err);

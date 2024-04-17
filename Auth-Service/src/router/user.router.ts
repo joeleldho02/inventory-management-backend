@@ -1,11 +1,11 @@
 import express from 'express';
-import { userLoginController, userLogoutController, userResetPassController, userUpdateStatusController } from '../config/dependencies.inversify';
+import { userController } from '../config/dependencies.inversify';
 
 const router = express.Router();
 
-router.post('/login', userLoginController.userLogin.bind(userLoginController));
-router.get('/logout', userLogoutController.userLogout.bind(userLogoutController));
-router.post('/reset-password', userResetPassController.resetPassword.bind(userResetPassController));
-router.post('/update-status', userUpdateStatusController.statusUpdate.bind(userUpdateStatusController));
+router.post('/login', userController.userLogin.bind(userController));
+router.get('/logout', userController.userLogout.bind(userController));
+router.post('/reset-password', userController.resetPassword.bind(userController));
+router.post('/update-status', userController.updateStatus.bind(userController));
 
 export default router;

@@ -1,4 +1,4 @@
-import UserEntity from "../../libs/entities/user.entity";
+import UserEntity from "../entities/user.entity";
 
 export interface IUserRepository {
   create(userData: UserEntity) ; 

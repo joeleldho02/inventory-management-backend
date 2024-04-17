@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import jwt from 'jsonwebtoken';
-import { createAccessToken } from "./createToken";
-import UserEntity from "../../libs/entities/user.entity";
-import { ROLES } from "../roles.list";
+import { createAccessToken } from "../../utils/jwt/createToken";
+import UserEntity from "../entities/user.entity";
+import { ROLES } from "../../utils/roles.list";
 
 // Extend Request interface to include user property
 declare global {
@@ -22,7 +22,7 @@ export const verifyUser = (req: Request, res: Response, next: NextFunction) => {
         return res.status(401).json({ status: false, message: "Invalid Refresh Token" });
 
     jwt.verify( userAccessToken, process.env.ACCESS_SECRET_KEY || "", 
-        (err: jwt.VerifyErrors | null, decoded: any) => {
+        (err: jwt.VerifyErrors | null, decoded) => {
             if (err) {
                 console.log("err.name");
                 console.log(err.name);

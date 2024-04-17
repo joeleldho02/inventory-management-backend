@@ -1,5 +1,4 @@
 import { kafka } from "../config/kafka";
-import UserEntity from "../libs/entities/user.entity";
 
 const producer = kafka.producer();
 
@@ -13,7 +12,7 @@ export const updateUserStatusProducer = async ( userId: string, isActive:boolean
                 isActive
             },
         };
-        const result: any = await producer.send({
+        const result: unknown = await producer.send({
             topic: topic,
             messages: [{ value: JSON.stringify(messagePayload) }],
         });

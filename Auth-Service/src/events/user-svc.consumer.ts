@@ -13,8 +13,8 @@ export const userSvcConsumer = async ()=>{
         await consumer.run({
             eachMessage:async({message})=>{
                 console.log('authTopic');
-                const binarydata:any = message?.value;
-                const jsonString:string = binarydata?.toString();
+                const binarydata:unknown = message?.value;
+                const jsonString:string = binarydata?.toString() as string;
                 const jsonData = JSON.parse(jsonString);
                 const messageType = jsonData?.type;                
 

@@ -1,4 +1,4 @@
-import { IUserRepository } from "../../utils/interface/IUserRepository";
+import { IUserRepository } from "./IUserRepository";
 import UserEntity from "../entities/user.entity";
 import { UserDb } from "./schema/user.schema";
 import { injectable } from "inversify";

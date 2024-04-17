@@ -1,9 +1,10 @@
 import { injectable } from "inversify";
-import { AdminDb } from './schema/admin.schema';
-import AdminEntity from "../entities/admin.entity";
+import { AdminDb } from '../schema/admin.schema';
+import AdminEntity from "../../entities/admin.entity";
+import { IAdminRepository } from "./IAdminRepository";
 
 @injectable()
-export class AdminRepository{
+export class AdminRepository implements IAdminRepository{
     private db: typeof AdminDb;
 
     constructor(){
@@ -11,7 +12,7 @@ export class AdminRepository{
     }
     async findByEmail(email: string):Promise<AdminEntity> {
         try{
-            let user = await this.db.findOne({email: email}).lean();
+            const user = await this.db.findOne({email: email}).lean();
             return user as AdminEntity;
         } catch(err){
             console.log('ERR: AdminRepository -> findByEmail() ', err);
@@ -21,7 +22,7 @@ export class AdminRepository{
 
     async findById(userId: string):Promise<AdminEntity> {
         try{
-            let user = await this.db.findById(userId).lean();
+            const user = await this.db.findById(userId).lean();
             return user as AdminEntity;
         } catch(err){
             console.log('ERR: AdminRepository -> findById() ', err);
@@ -31,7 +32,7 @@ export class AdminRepository{
 
     async updatePassword(userId:string, password: string):Promise<AdminEntity>{
         try{
-            let user = await this.db.findByIdAndUpdate(userId, { password: password, updatedOn: Date.now()}, { new: true }).lean();
+            const user = await this.db.findByIdAndUpdate(userId, { password: password, updatedOn: Date.now()}, { new: true }).lean();
             return user as AdminEntity;
         } catch(err){
             console.log('ERR: AdminRepository -> updatePassword() ', err);

@@ -1,12 +1,12 @@
 import express from 'express';
-import { getUsersController, addUserController, deleteUserController, getUserController, updateUserController } from '../config/dependencies.inversify';
+import { userController } from '../config/dependencies.inversify';
 
 const router = express.Router();
 
-router.get('/user/:userId', getUserController.getUser.bind(getUserController));
-router.get('/users', getUsersController.getUsers.bind(getUsersController));
-router.post('/user', addUserController.addUser.bind(addUserController));
-router.patch('/user', updateUserController.updateUser.bind(updateUserController));
-router.delete('/user/:userId', deleteUserController.deleteUser.bind(deleteUserController));
+router.get('/user/:userId', userController.getUser.bind(userController));
+router.get('/users', userController.getUsers.bind(userController));
+router.post('/user', userController.addUser.bind(userController));
+router.patch('/user', userController.updateUser.bind(userController));
+router.delete('/user/:userId', userController.deleteUser.bind(userController));
 
 export default router;
