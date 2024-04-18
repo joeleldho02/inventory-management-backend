@@ -15,7 +15,7 @@ export class AdminRepository implements IAdminRepository{
             const user = await this.db.findOne({email: email}).lean();
             return user as AdminEntity;
         } catch(err){
-            console.log('ERR: AdminRepository -> findByEmail() ', err);
+            console.error('ERR: AdminRepository -> findByEmail() ', err);
             throw new Error('Error in finding user!');
         }
     }
@@ -25,7 +25,7 @@ export class AdminRepository implements IAdminRepository{
             const user = await this.db.findById(userId).lean();
             return user as AdminEntity;
         } catch(err){
-            console.log('ERR: AdminRepository -> findById() ', err);
+            console.error('ERR: AdminRepository -> findById() ', err);
             throw new Error('Error in finding user!');
         }
     }
@@ -35,7 +35,7 @@ export class AdminRepository implements IAdminRepository{
             const user = await this.db.findByIdAndUpdate(userId, { password: password, updatedOn: Date.now()}, { new: true }).lean();
             return user as AdminEntity;
         } catch(err){
-            console.log('ERR: AdminRepository -> updatePassword() ', err);
+            console.error('ERR: AdminRepository -> updatePassword() ', err);
             throw new Error('Error in updating user!');
         }
     }

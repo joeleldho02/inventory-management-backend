@@ -11,14 +11,14 @@ export class UserController implements IUserController{
 
     async addUser(userData:any, password:string){
         try{
-            console.log(userData);
+            console.log(userData); // to be removed after adding interface
             
             const user = new UserEntity({...userData, password});  
             console.log(user);
             
             await this.usecase.addUser(user);
         } catch(err){
-            console.log('ERR: UserController -> addUser() ', err); 
+            console.error('ERR: UserController -> addUser() ', err); 
         }
     }
 
@@ -35,7 +35,7 @@ export class UserController implements IUserController{
                 return res.status(200).json(response);
             return res.status(500).json(response);
         } catch(err){
-            console.log('ERR: UserController --> updateStatus()', err);
+            console.error('ERR: UserController --> updateStatus()', err);
             next(err);
         }
     }
@@ -53,7 +53,7 @@ export class UserController implements IUserController{
                 return res.status(200).json(response);
             return res.status(500).json(response);
         } catch(err){
-            console.log('ERR: UserController --> resetPassword() ', err);
+            console.error('ERR: UserController --> resetPassword() ', err);
             next(err);
         }
     }
@@ -82,7 +82,7 @@ export class UserController implements IUserController{
             }
             return res.status(500).json(response);
         } catch(err){
-            console.log('ERR: UserController --> userLogin() ', err);
+            console.error('ERR: UserController --> userLogin() ', err);
             next(err);
         }
     }
@@ -93,7 +93,7 @@ export class UserController implements IUserController{
             res.clearCookie("userRefreshToken");
             res.status(200).json({ status: true });
         } catch(err){
-            console.log('ERR: UserController --> userLogout() ', err);            
+            console.error('ERR: UserController --> userLogout() ', err);            
             next(err);
         }
     }

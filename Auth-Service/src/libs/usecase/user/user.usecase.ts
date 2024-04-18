@@ -15,7 +15,7 @@ export class UserUseCase implements IUserUsecase{
         try{
             await this.repo.create(userData);
         } catch(err){
-            console.log('ERR: AddUserUseCase -> execute() ', err);
+            console.error('ERR: UserUseCase -> addUser() ', err);
             throw err;
         }
     }
@@ -24,22 +24,20 @@ export class UserUseCase implements IUserUsecase{
         try{
             const user = await this.repo.findById(userId);
             
-            if(user){
-                if(user.isActive == undefined)
-                    return { status: false, message:'User does not have isActive feild!' };   
-                if(user.isActive.toString() === isActive.toString())
-                    return { status: false, message:'Input status is current status!' };   
-                const response = await this.repo.updateIsActive(userId, isActive);
-                if(response){
-                    updateUserStatusProducer(userId, isActive, "userTopic", "updateStatus");
-                    delete response.password;                    
-                    return { status: true, user: response };
-                }
+            if(!user)
+                return { status: false, message:'User not found!' };
+            if(user.isActive == undefined)
+                return { status: false, message:'User does not have status feild!' };   
+            if(user.isActive.toString() === isActive.toString())
+                return { status: false, message:'Input status is same as current status!' };   
+            const response = await this.repo.updateIsActive(userId, isActive);
+            if(!response)
                 return { status: false, message:'Some error occurred while status update!' };                
-            }
-            return { status: false, message:'User not found!' };
+            updateUserStatusProducer(userId, isActive, "userTopic", "updateStatus");
+            delete response.password;                    
+            return { status: true, user: response };
         } catch(err){
-            console.log('ERR: UserUpdateStatusUseCase --> execute()', err);
+            console.error('ERR: UserUseCase --> updateUser()', err);
             throw err;
         }
     }
@@ -47,21 +45,19 @@ export class UserUseCase implements IUserUsecase{
     async resetPassword(userId:string, oldPassword:string, newPassword:string){
         try{
             const user = await this.repo.findById(userId);
-            if(user && user.password){
-                const passwordMatch = await comparePassword(oldPassword, user.password);
-                if(passwordMatch){
-                    const hashedPassword = await hashPassword(newPassword);
-                    const response = await this.repo.updatePassword(userId, hashedPassword);
-                    if(response){
-                        delete response.password;                    
-                        return { status: true, user: response };
-                    }
-                }
+            if(!user || !user.password)
+                return { status: false, message:'User not found!' };
+            const passwordMatch = await comparePassword(oldPassword, user.password);
+            if(!passwordMatch)
                 return { status: false, message:'Current password incorrect!' };                
-            }
-            return { status: false, message:'User not found!' };
+            const hashedPassword = await hashPassword(newPassword);
+            const response = await this.repo.updatePassword(userId, hashedPassword);
+            if(!response)
+                return { status: false, message:'Some error occurred while status update!' };
+            delete response.password;                    
+            return { status: true, user: response };
         } catch(err){
-            console.log('ERR: UserResetPasswordUseCase --> execute()', err);
+            console.error('ERR: UserUseCase --> resetPassword()', err);
             throw err;
         }
     }
@@ -74,15 +70,14 @@ export class UserUseCase implements IUserUsecase{
             const validPass = await comparePassword(password, user.password);
             if(!user.isActive)
                 return { status:false, message:'User is blocked by administrator! Please contact administrator.' }
-            if(validPass){
-                delete user.password;                
-                const accessToken = createAccessToken(user, process.env.ACCESS_SECRET_KEY || '', process.env.ACCESS_EXPIRY || '');
-                const refreshToken = createRefreshToken(user, process.env.REFRESH_SECRET_KEY || '', process.env.REFRESH_EXPIRY || '');
-                return { status:true, user: user, accessToken, refreshToken }
-            }
-            return { status:false, message:'Password is incorrect!' };
+            if(!validPass)
+                return { status:false, message:'Password is incorrect!' };
+            delete user.password;                
+            const accessToken = createAccessToken(user, process.env.ACCESS_SECRET_KEY || '', process.env.ACCESS_EXPIRY || '');
+            const refreshToken = createRefreshToken(user, process.env.REFRESH_SECRET_KEY || '', process.env.REFRESH_EXPIRY || '');
+            return { status:true, user: user, accessToken, refreshToken }
         } catch(err){
-            console.log('ERR: UserLoginUseCase --> execute()', err);            
+            console.error('ERR: UserUseCase --> login()', err);            
             throw err;
         }
     }

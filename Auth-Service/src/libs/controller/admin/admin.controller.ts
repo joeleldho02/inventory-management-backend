@@ -32,7 +32,7 @@ export class AdminController implements IAdminController{
             }
             return res.status(500).json(response);
         } catch(err){
-            console.log('ERR: AdminController --> adminLogin() ', err);
+            console.error('ERR: AdminController --> adminLogin() ', err);
             next(err);
         }
     }
@@ -43,7 +43,7 @@ export class AdminController implements IAdminController{
             res.clearCookie("adminRefreshToken");
             res.status(200).json({ status: true });
         } catch(err){
-            console.log('ERR: AdminController --> adminLogout()', err);            
+            console.error('ERR: AdminController --> adminLogout()', err);            
             next(err);
         }
     }
@@ -61,7 +61,7 @@ export class AdminController implements IAdminController{
                 return res.status(200).json(response);
             return res.status(500).json(response);
         } catch(err){
-            console.log('ERR: AdminController --> resetPassword() ', err);
+            console.error('ERR: AdminController --> resetPassword() ', err);
             next(err);
         }
     }

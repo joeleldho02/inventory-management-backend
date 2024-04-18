@@ -16,7 +16,7 @@ export class UserRepository implements IUserRepository{
             const user = await this.db.create({ ...userData, updatedBy:userData.createdBy });
             return user;          
         } catch(err){
-            console.log('ERR: UserRepository -> create() ', err);  
+            console.error('ERR: UserRepository -> create() ', err);  
             throw new Error("Error in creating user!");
         }
     }
@@ -27,7 +27,7 @@ export class UserRepository implements IUserRepository{
             const user = await this.db.findByIdAndUpdate(userId, userData, {new: true});
             return user;
         } catch(err){            
-            console.log('ERR: UserRepository -> update() ', err);
+            console.error('ERR: UserRepository -> update() ', err);
             throw new Error("Error in updating user!"); 
         }
     }
@@ -41,7 +41,7 @@ export class UserRepository implements IUserRepository{
                                         .lean();
             return users;
         }catch(err){
-            console.log('ERR: UserRepository -> findAll() ', err);
+            console.error('ERR: UserRepository -> findAll() ', err);
             throw new Error("Error in fetching all users!"); 
         }
     }
@@ -51,7 +51,7 @@ export class UserRepository implements IUserRepository{
             const user = await this.db.findById(userId);
             return user;
         } catch(err){
-            console.log('ERR: UserRepository -> findById() ', err);
+            console.error('ERR: UserRepository -> findById() ', err);
             throw new Error('Error in finding user!');
         }
     }
@@ -60,7 +60,7 @@ export class UserRepository implements IUserRepository{
             const user = await this.db.findByIdAndDelete(userId);
             return user;
         } catch(err){
-            console.log('ERR: UserRepository -> delete() ', err);
+            console.error('ERR: UserRepository -> delete() ', err);
             throw new Error("Error in deleteing user!"); 
         }
     }
@@ -80,7 +80,7 @@ export class UserRepository implements IUserRepository{
         try{
             return await this.db.find({}).countDocuments();
         } catch(err){
-            console.log('ERR: getDocCount() --> ',err);
+            console.error('ERR: getDocCount() --> ',err);
             return -1;            
         }
     }

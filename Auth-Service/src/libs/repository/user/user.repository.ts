@@ -15,7 +15,7 @@ export class UserRepository implements IUserRepository{
         try{
             await this.db.create({ ...userData, updatedBy:userData.createdBy });   
         } catch(err){
-            console.log('ERR: UserRepository -> create() ', err);  
+            console.error('ERR: UserRepository -> create() ', err);  
             throw new Error("Error in creating user!");
         }
     }
@@ -25,7 +25,7 @@ export class UserRepository implements IUserRepository{
             const user = await this.db.findById(userId).lean();
             return user as UserEntity;
         } catch(err){
-            console.log('ERR: UserRepository -> findById() ', err);
+            console.error('ERR: UserRepository -> findById() ', err);
             throw new Error('Error in finding user!');
         }
     }
@@ -35,7 +35,7 @@ export class UserRepository implements IUserRepository{
             const user = await this.db.findOne({email: email}).lean();
             return user as UserEntity;
         } catch(err){
-            console.log('ERR: UserRepository -> findByEmail() ', err);
+            console.error('ERR: UserRepository -> findByEmail() ', err);
             throw new Error('Error in finding user!');
         }
     }
@@ -45,7 +45,7 @@ export class UserRepository implements IUserRepository{
             const user = await this.db.findByIdAndUpdate(userId, { password: password, updatedOn: Date.now()}, { new: true }).lean();
             return user as UserEntity;
         } catch(err){
-            console.log('ERR: UserRepository -> updatePassword() ', err);
+            console.error('ERR: UserRepository -> updatePassword() ', err);
             throw new Error('Error in updating user!');
         }
     }
@@ -55,7 +55,7 @@ export class UserRepository implements IUserRepository{
             const user = await this.db.findByIdAndUpdate(userId, { isActive: isActive, updatedOn: Date.now()}, { new: true }).lean();
             return user as UserEntity;
         } catch(err){
-            console.log('ERR: UserRepository -> updateIsActive() ', err);
+            console.error('ERR: UserRepository -> updateIsActive() ', err);
             throw new Error('Error in updating user!');
         }
     }

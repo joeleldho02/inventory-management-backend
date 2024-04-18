@@ -15,15 +15,14 @@ export class AdminUseCase implements IAdminUseCase{
             if(!user || !user.password)
                 return { status:false, message:'User not found!' };
             const validPass = await comparePassword(password, user.password);
-            if(validPass){
-                const accessToken = createAccessToken(user, process.env.ACCESS_SECRET_KEY || '', process.env.ACCESS_EXPIRY || '');
-                const refreshToken = createRefreshToken(user, process.env.REFRESH_SECRET_KEY || '', process.env.REFRESH_EXPIRY || '');
-                delete user.password;
-                return { status:true, user: user, accessToken, refreshToken }
-            }
-            return { status:false, message:'Password is incorrect!' };
+            if(!validPass)
+                return { status:false, message:'Password is incorrect!' };
+            const accessToken = createAccessToken(user, process.env.ACCESS_SECRET_KEY || '', process.env.ACCESS_EXPIRY || '');
+            const refreshToken = createRefreshToken(user, process.env.REFRESH_SECRET_KEY || '', process.env.REFRESH_EXPIRY || '');
+            delete user.password;
+            return { status:true, user: user, accessToken, refreshToken }
         } catch(err){
-            console.log('ERR: AdminUseCase --> login()', err);            
+            console.error('ERR: AdminUseCase --> login()', err);            
             throw err;
         }
     }
@@ -31,21 +30,19 @@ export class AdminUseCase implements IAdminUseCase{
     async resetPassword(userId:string, oldPassword:string, newPassword:string){
         try{
             const user = await this.repo.findById(userId);
-            if(user && user.password){
-                const passwordMatch = await comparePassword(oldPassword, user.password);
-                if(passwordMatch){
-                    const hashedPassword = await hashPassword(newPassword);
-                    const response = await this.repo.updatePassword(userId, hashedPassword);
-                    if(response){
-                        delete response.password;                  
-                        return { status: true, user: response };
-                    }
-                }
-                return { status: false, message:'Current password incorrect!' };                
-            }
-            return { status: false, message:'User not found!' };
+            if(!user || !user.password)
+                return { status: false, message:'User not found!' };
+            const passwordMatch = await comparePassword(oldPassword, user.password);
+            if(!passwordMatch)
+                return { status: false, message:'Current password is incorrect!' };                
+            const hashedPassword = await hashPassword(newPassword);
+            const response = await this.repo.updatePassword(userId, hashedPassword);
+            if(!response)
+                return { status: false, message:'Some error occurred while status update!' };
+            delete response.password;                  
+            return { status: true, user: response };
         } catch(err){
-            console.log('ERR: AdminUseCase --> resetPassword()', err);
+            console.error('ERR: AdminUseCase --> resetPassword()', err);
             throw err;
         }
     }

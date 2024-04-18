@@ -24,13 +24,13 @@ export class UserUseCase implements IUserUsecase{
             const hashedPassword = await hashPassword(userData.password);
             userData.password = hashedPassword;
             const response = await this.repo.create(userData);
-            if(response){              
-                addUserProducer(response, hashedPassword, "authTopic", "addUser");
-                return { status: true, user:response };
-            }
-            return { status: false, message: "Error in creating user!" };
+            
+            if(!response)
+                return { status: false, message: "Error in creating user!" };
+            addUserProducer(response, hashedPassword, "authTopic", "addUser");
+            return { status: true, user:response };
         } catch(err){
-            console.log('ERR: UserUseCase -> addUser() ', err);
+            console.error('ERR: UserUseCase -> addUser() ', err);
             throw err;
         }
     }
@@ -42,7 +42,7 @@ export class UserUseCase implements IUserUsecase{
                 return { status:true, user: response };
             return { status:false, message: 'User not found!' };
         } catch(err){
-            console.log('ERR: UserUseCase --> updateUser() ', err);            
+            console.error('ERR: UserUseCase --> updateUser() ', err);            
             throw err;
         }
     }
@@ -54,7 +54,7 @@ export class UserUseCase implements IUserUsecase{
                 return { status: true, user: response };
             return { status: false, messsage: 'User not found!' };
         } catch(err){
-            console.log('ERR: UserUseCase --> getUser()', err);
+            console.error('ERR: UserUseCase --> getUser()', err);
             throw err;
         }
     }
@@ -79,7 +79,7 @@ export class UserUseCase implements IUserUsecase{
                 return { status:true, users:response, count:docCount };
             return { status:false, message:'Error in fetching all users' };
         } catch(err){
-            console.log('ERR: UserUseCase --> getUsers()', err);
+            console.error('ERR: UserUseCase --> getUsers()', err);
             throw err;
         }
     }  
@@ -91,7 +91,7 @@ export class UserUseCase implements IUserUsecase{
                 return { status:true, user:response};
             return { status:false, message:'Error in deleting user! User not found.' };
         } catch(err){
-            console.log('ERR: UserUseCase --> deleteUser()', err);            
+            console.error('ERR: UserUseCase --> deleteUser()', err);            
             throw err;
         }
     }

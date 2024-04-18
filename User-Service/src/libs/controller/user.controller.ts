@@ -10,14 +10,9 @@ export class UserController implements IUserController{
     constructor(@inject(INTERFACE_TYPE.UserUseCase) private usecase: UserUseCase) {}
 
     async addUser(req:Request, res:Response, next:NextFunction){
-        try{            
-            console.log('Add user');
-            
-            console.log(req.body);
-            
+        try{
             if(Object.keys(req.body).length === 0)
-                throw new Error('User data is missing!');
-            
+                throw new Error('User data not entered!');            
             const userData = new UserEntity(req.body);  
             const response = await this.usecase.addUser(userData);
             if(response.status)
@@ -25,7 +20,7 @@ export class UserController implements IUserController{
             else
                 res.status(500).json(response);
         } catch(err){
-            console.log('ERR: UserController -> addUser() ', err);            
+            console.error('ERR: UserController -> addUser() ', err);            
             next(err);
         }
     }
@@ -38,11 +33,10 @@ export class UserController implements IUserController{
             const userData = new UserEntity(req.body);  
             const response = await this.usecase.updateUser(userId, userData);
             if(response.status)
-                res.status(200).json(response);
-            else
-                res.status(500).json(response);
+                return res.status(200).json(response);
+            return res.status(500).json(response);
         } catch(err){
-            console.log('ERR: UserController --> updateUser() ');
+            console.error('ERR: UserController --> updateUser() ');
             next(err);
         }
     }
@@ -53,7 +47,7 @@ export class UserController implements IUserController{
             const userData = new UserEntity(data);  
             await this.usecase.updateUser(userId, userData);
         } catch(err){
-            console.log('ERR: UserController --> updateStatus() ', err);
+            console.error('ERR: UserController --> updateStatus() ', err);
         }
     }
 
@@ -67,7 +61,7 @@ export class UserController implements IUserController{
                 return res.status(200).json(response);
             return res.status(500).json(response);
         } catch(err){
-            console.log('ERR: UserController --> getUser()', err);
+            console.error('ERR: UserController --> getUser()', err);
             next(err);
         }
     }
@@ -83,11 +77,10 @@ export class UserController implements IUserController{
                         
             const response = await this.usecase.getUsers(limit, skip);
             if(response.status)
-                res.status(200).json(response);
-            else
-                res.status(500).json(response);
+                return res.status(200).json(response);
+            return res.status(500).json(response);
         } catch(err){
-            console.log('ERR: UserController --> getUsers()', err);
+            console.error('ERR: UserController --> getUsers()', err);
             next(err);
         }
     }
@@ -102,7 +95,7 @@ export class UserController implements IUserController{
                 return res.status(200).json(response);
             return res.status(500).json(response);
         } catch(err){
-            console.log('ERR: UserController --> deleteUser()', err);
+            console.error('ERR: UserController --> deleteUser()', err);
             next(err);
         }
     }
